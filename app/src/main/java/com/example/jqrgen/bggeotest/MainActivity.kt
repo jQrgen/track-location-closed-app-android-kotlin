@@ -13,9 +13,14 @@ import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-
-
-
+import android.content.Intent
+import android.net.Uri
+import android.net.Uri.fromParts
+import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import com.example.jqrgen.bggeotest.R.layout.activity_main
+import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
+import android.support.annotation.NonNull
+import android.view.View
 
 
 class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -142,12 +147,74 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         }
     }
 
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        Log.i(TAG, "onRequestPermissionResult")
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            if (grantResults.size <= 0) {
+                // If user interaction was interrupted, the permission request is cancelled and you
+                // receive empty arrays.
+                Log.i(TAG, "User interaction was cancelled.")
+            } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted.
+                // TODO: requestLocationUpdates(null)
+            } else {
+                // Permission denied.
+
+                // Notify the user via a SnackBar that they have rejected a core permission for the
+                // app, which makes the Activity useless. In a real app, core permissions would
+                // typically be best requested during a welcome-screen flow.
+
+                // Additionally, it is important to remember that a permission might have been
+                // rejected without asking the user for permission (device policy or "Never ask
+                // again" prompts). Therefore, a user interface affordance is typically implemented
+                // when permissions are denied. Otherwise, your app could appear unresponsive to
+                // touches or interactions which have required permissions.
+                Snackbar.make(
+                        findViewById(R.id.activity_main),
+                        R.string.permission_denied_explanation,
+                        Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.settings, object : View.OnClickListener() {
+                            fun onClick(view: View) {
+                                // Build intent that displays the App settings screen.
+                                val intent = Intent()
+                                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                val uri = Uri.fromParts("package",
+                                        BuildConfig.APPLICATION_ID, null)
+                                intent.data = uri
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                                startActivity(intent)
+                            }
+                        })
+                        .show()
+            }
+        }
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
         if (s == Utils.KEY_LOCATION_UPDATES_RESULT) {
             mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
         } else if (s == Utils.KEY_LOCATION_UPDATES_REQUESTED) {
             updateButtonsState(Utils().getRequestingLocationUpdates(this))
         }
+    }
+
+
+    /**
+     * Handles the Request Updates button and requests start of location updates.
+     */
+    fun requestLocationUpdates(view: View) {
+
+    }
+
+    /**
+     * Handles the Remove Updates button, and requests removal of location updates.
+     */
+    fun removeLocationUpdates(view: View) {
+
     }
 
     /**
