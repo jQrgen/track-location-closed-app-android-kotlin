@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import com.google.android.gms.location.LocationServices;
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,8 +22,11 @@ class MainActivity : AppCompatActivity() {
 
         // Check if the user revoked runtime permissions.
         if (!checkFineLocationPermission()) {
-            // requestFineLocationPermission()
+            requestFineLocationPermission()
         }
+
+        val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
     }
 
     /**
@@ -34,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         return permissionState == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun requestPermissions() {
+    private fun requestFineLocationPermission() {
         val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
 
@@ -42,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         // request previously, but didn't check the "Don't ask again" checkbox.
         if (shouldProvideRationale) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.")
-
+            // NOTE: Removed snackbar from here.
             ActivityCompat.requestPermissions(this@MainActivity,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_PERMISSIONS_REQUEST_CODE)
