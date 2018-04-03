@@ -10,8 +10,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
 
 
 
@@ -46,7 +46,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         }
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        // createLocationRequest()
+        createLocationRequest()
 
     }
 
@@ -124,6 +124,10 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     companion object {
         const val TAG = "MainActivity"
         const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
+
+        const val UPDATE_INTERVAL = 1000L*60L*180L
+        const val FASTEST_UPDATE_INTERVAL = 1000L*60L*10L
+        const val MAX_WAIT_TIME = 1000L*60L*60L*16L
     }
 
 }
