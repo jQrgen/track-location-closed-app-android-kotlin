@@ -69,6 +69,12 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
     }
 
+    override fun onStop() {
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this)
+        super.onStop()
+    }
+
     /**
      * Sets up the location request. Android has two location request settings:
      * `ACCESS_COARSE_LOCATION` and `ACCESS_FINE_LOCATION`. These settings control
