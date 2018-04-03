@@ -4,8 +4,14 @@ import android.content.Context
 import android.preference.PreferenceManager
 
 
-
 class Utils{
+
+    fun setRequestingLocationUpdates(context: Context, value: Boolean) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean(KEY_LOCATION_UPDATES_REQUESTED, value)
+                .apply()
+    }
 
     fun getRequestingLocationUpdates(context: Context): Boolean {
         return PreferenceManager.getDefaultSharedPreferences(context)

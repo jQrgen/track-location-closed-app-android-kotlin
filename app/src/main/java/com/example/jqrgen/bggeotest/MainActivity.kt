@@ -1,6 +1,7 @@
 package com.example.jqrgen.bggeotest
 
 import android.Manifest
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -18,6 +19,8 @@ import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+
+
 
 
 class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -111,6 +114,24 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         mLocationRequest?.maxWaitTime = MAX_WAIT_TIME
     }
 
+    private fun getPendingIntent(): PendingIntent {
+        // Note: for apps targeting API level 25 ("Nougat") or lower, either
+        // PendingIntent.getService() or PendingIntent.getBroadcast() may be used when requesting
+        // location updates. For apps targeting API level O, only
+        // PendingIntent.getBroadcast() should be used. This is due to the limits placed on services
+        // started in the background in "O".
+
+        val  intent = Intent(this, LocationUpdatesIntentService::class.java)
+
+        intent.action = LocationUpdatesIntentService.ACTION_PROCESS_UPDATES;
+        return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // TODO(developer): uncomment to use PendingIntent.getBroadcast().
+        // val intent = Intent(this, LocationUpdatesBroadcastReceiver::class.java)
+        // intent.action = LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES
+        // return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+    }
+
     /**
      * Return the current state of the permissions needed.
      */
@@ -164,7 +185,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
                 Log.i(TAG, "User interaction was cancelled.")
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission was granted.
-                // TODO: requestLocationUpdates(null)
+                requestLocationUpdates()
             } else {
                 // Permission denied.
 
@@ -208,7 +229,15 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     /**
      * Handles the Request Updates button and requests start of location updates.
      */
-    fun requestLocationUpdates(view: View) {
+    fun requestLocationUpdates() {
+        try {
+            Log.i(TAG, "Starting location updates")
+            Utils().setRequestingLocationUpdates(this, true)
+            mFusedLocationClient?.requestLocationUpdates(mLocationRequest, getPendingIntent())
+        } catch (e: SecurityException) {
+            Utils().setRequestingLocationUpdates(this, false)
+            e.printStackTrace()
+        }
 
     }
 
@@ -216,7 +245,9 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      * Handles the Remove Updates button, and requests removal of location updates.
      */
     fun removeLocationUpdates(view: View) {
-
+        Log.i(TAG, "Removing location updates");
+        Utils().setRequestingLocationUpdates(this, false);
+        mFusedLocationClient?.removeLocationUpdates(getPendingIntent());
     }
 
     /**
