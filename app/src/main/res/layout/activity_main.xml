@@ -39,10 +39,15 @@
         android:layout_width="250dp"
         android:layout_height="212dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="location_updates_result"
         app:layout_constraintBottom_toTopOf="@+id/remove_updates_button"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="67dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

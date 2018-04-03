@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.util.Log
@@ -32,13 +33,18 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      */
     private var mLocationRequest: LocationRequest? = null
 
+    // UI Widgets.
+    private var mRequestUpdatesButton: Button? = null
+    private var mRemoveUpdatesButton: Button? = null
+    private var mLocationUpdatesResultView: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mRequestUpdatesButton = findViewById<Button>(R.id.request_updates_button);
-        val mRemoveUpdatesButton = findViewById<Button>(R.id.remove_updates_button)
-        val mLocationUpdatesResultView = findViewById<TextView>(R.id.location_updates_result)
+        mRequestUpdatesButton = findViewById(R.id.request_updates_button);
+        mRemoveUpdatesButton = findViewById(R.id.remove_updates_button)
+        mLocationUpdatesResultView = findViewById(R.id.location_updates_result)
 
         // Check if the user revoked runtime permissions.
         if (!checkFineLocationPermission()) {
@@ -48,6 +54,18 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         createLocationRequest()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // updateButtonsState(Utils.getRequestingLocationUpdates(this))
+        // mLocationUpdatesResultView.setText(Utils.getLocationUpdatesResult(this))
     }
 
     /**
@@ -118,6 +136,21 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
             ActivityCompat.requestPermissions(this@MainActivity,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    /**
+     * Ensures that only one button is enabled at any time. The Start Updates button is enabled
+     * if the user is not requesting location updates. The Stop Updates button is enabled if the
+     * user is requesting location updates.
+     */
+    private fun updateButtonsState(requestingLocationUpdates: Boolean) {
+        if (requestingLocationUpdates) {
+            mRequestUpdatesButton?.setEnabled(false)
+            mRemoveUpdatesButton?.setEnabled(true)
+        } else {
+            mRequestUpdatesButton?.setEnabled(true)
+            mRemoveUpdatesButton?.setEnabled(false)
         }
     }
 
