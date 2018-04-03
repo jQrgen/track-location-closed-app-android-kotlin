@@ -121,9 +121,9 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         // PendingIntent.getBroadcast() should be used. This is due to the limits placed on services
         // started in the background in "O".
 
-        val  intent = Intent(this, LocationUpdatesIntentService::class.java)
+        val  intent = Intent(this, LocationUpdatesBroadcastReceiver::class.java)
 
-        intent.action = LocationUpdatesIntentService.ACTION_PROCESS_UPDATES;
+        intent.action = LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES;
         return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // TODO(developer): uncomment to use PendingIntent.getBroadcast().

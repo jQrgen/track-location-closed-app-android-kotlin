@@ -1,19 +1,19 @@
 package com.example.jqrgen.bggeotest
 
-import android.content.Context
-import android.location.Location
-import android.preference.PreferenceManager
-import java.text.DateFormat
-import java.util.*
-import android.app.NotificationManager
 import android.app.NotificationChannel
-import android.os.Build
-import android.graphics.BitmapFactory
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.location.Location
+import android.os.Build
+import android.preference.PreferenceManager
 import android.support.v4.app.NotificationCompat
+import java.text.DateFormat
+import java.util.*
 
 
 class Utils{
@@ -139,5 +139,7 @@ class Utils{
     companion object {
         const val KEY_LOCATION_UPDATES_REQUESTED = "location-updates-requested"
         const val KEY_LOCATION_UPDATES_RESULT = "location-update-result"
+        const val CHANNEL_ID = "channel_01"
+
     }
 }
