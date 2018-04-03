@@ -185,7 +185,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
                 Log.i(TAG, "User interaction was cancelled.")
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission was granted.
-                requestLocationUpdates()
+                requestLocationUpdates(null)
             } else {
                 // Permission denied.
 
@@ -229,7 +229,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     /**
      * Handles the Request Updates button and requests start of location updates.
      */
-    fun requestLocationUpdates() {
+    fun requestLocationUpdates(view: View?) {
         try {
             Log.i(TAG, "Starting location updates")
             Utils().setRequestingLocationUpdates(this, true)
