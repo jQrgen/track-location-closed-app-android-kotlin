@@ -19,9 +19,6 @@ import com.google.android.gms.location.LocationServices
 
 
 class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
     /**
      * Provides access to the Fused Location Provider API.
@@ -112,7 +109,6 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         mLocationRequest?.maxWaitTime = MAX_WAIT_TIME
     }
 
-
     /**
      * Return the current state of the permissions needed.
      */
@@ -143,6 +139,14 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
             ActivityCompat.requestPermissions(this@MainActivity,
                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                     REQUEST_PERMISSIONS_REQUEST_CODE)
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
+        if (s == Utils.KEY_LOCATION_UPDATES_RESULT) {
+            mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
+        } else if (s == Utils.KEY_LOCATION_UPDATES_REQUESTED) {
+            updateButtonsState(Utils().getRequestingLocationUpdates(this))
         }
     }
 
