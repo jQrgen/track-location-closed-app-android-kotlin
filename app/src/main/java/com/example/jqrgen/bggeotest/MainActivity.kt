@@ -1,26 +1,23 @@
 package com.example.jqrgen.bggeotest
 
 import android.Manifest
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.provider.Settings
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.FragmentActivity
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
-import android.content.Intent
-import android.net.Uri
-import android.net.Uri.fromParts
-import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-import com.example.jqrgen.bggeotest.R.layout.activity_main
-import android.support.v4.view.accessibility.AccessibilityEventCompat.setAction
-import android.support.annotation.NonNull
-import android.view.View
 
 
 class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -131,10 +128,17 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         // request previously, but didn't check the "Don't ask again" checkbox.
         if (shouldProvideRationale) {
             Log.i(TAG, "Displaying permission rationale to provide additional context.")
-            // NOTE: Removed snackbar from here.
-            ActivityCompat.requestPermissions(this@MainActivity,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    REQUEST_PERMISSIONS_REQUEST_CODE)
+            Snackbar.make(
+                    findViewById(R.id.activity_main),
+                    R.string.permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.ok) {
+                        // Request permission
+                        ActivityCompat.requestPermissions(this@MainActivity,
+                                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                                REQUEST_PERMISSIONS_REQUEST_CODE)
+                    }
+                    .show()
 
         } else {
             Log.i(TAG, "Requesting permission")
@@ -177,18 +181,16 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
                         findViewById(R.id.activity_main),
                         R.string.permission_denied_explanation,
                         Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.settings, object : View.OnClickListener() {
-                            fun onClick(view: View) {
-                                // Build intent that displays the App settings screen.
-                                val intent = Intent()
-                                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                val uri = Uri.fromParts("package",
-                                        BuildConfig.APPLICATION_ID, null)
-                                intent.data = uri
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                                startActivity(intent)
-                            }
-                        })
+                        .setAction(R.string.settings) {
+                            // Build intent that displays the App settings screen.
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts("package",
+                                    BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
                         .show()
             }
         }
