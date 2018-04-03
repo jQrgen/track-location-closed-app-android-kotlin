@@ -65,6 +65,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     override fun onResume() {
         super.onResume()
         updateButtonsState(Utils().getRequestingLocationUpdates(this))
+        Log.i(TAG, "Utils().getLocationUpdatesResult(this): ${Utils().getLocationUpdatesResult(this)}" )
         mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
     }
 
