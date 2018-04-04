@@ -277,9 +277,9 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         const val TAG = "bgLoc MainActivity"
         const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
 
-        const val UPDATE_INTERVAL = 10800000L // 1000ms*60s*180m
+        const val UPDATE_INTERVAL = 10000L // 1000ms*60s*180m
         const val FASTEST_UPDATE_INTERVAL = 1000L // 1000ms*60s*10m
-        const val MAX_WAIT_TIME = 1000L*60L*60L*16L //
+        const val MAX_WAIT_TIME = 15000L// 1000L*60L*60L*16L //
     }
 
 }
