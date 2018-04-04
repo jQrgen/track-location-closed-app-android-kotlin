@@ -22,7 +22,6 @@ import com.google.android.gms.location.LocationServices
 
 
 
-
 class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**

@@ -12,7 +12,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/using_batched_location_view"
+        android:id="@+id/using_batched_locaaction_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/batched_location_updates"
