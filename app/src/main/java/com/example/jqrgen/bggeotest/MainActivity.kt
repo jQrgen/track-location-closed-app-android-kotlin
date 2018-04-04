@@ -72,6 +72,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     }
 
     override fun onStop() {
+        Log.i(TAG, "onStop")
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this)
         super.onStop()
@@ -93,6 +94,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      * updates.
      */
     private fun createLocationRequest() {
+        Log.i(TAG, "createLocationRequest")
         mLocationRequest = LocationRequest.create()
 
         // Sets the desired interval for active location updates. This interval is
@@ -136,12 +138,15 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      * Return the current state of the permissions needed.
      */
     private fun checkFineLocationPermission(): Boolean {
+        Log.i(TAG, "checkFineLocationPermission")
         val permissionState = ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
         return permissionState == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestFineLocationPermission() {
+        Log.i(TAG, "requestFineLocationPermission")
+
         val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
 
@@ -218,6 +223,8 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
+        Log.i(TAG, "onSharedPreferenceChanged")
+
         if (s == Utils.KEY_LOCATION_UPDATES_RESULT) {
             mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
         } else if (s == Utils.KEY_LOCATION_UPDATES_REQUESTED) {
@@ -231,7 +238,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      */
     fun requestLocationUpdates(view: View?) {
         try {
-            Log.i(TAG, "Starting location updates")
+            Log.i(TAG, "requestLocationUpdates: Starting location updates")
             Utils().setRequestingLocationUpdates(this, true)
             mFusedLocationClient?.requestLocationUpdates(mLocationRequest, getPendingIntent())
         } catch (e: SecurityException) {
@@ -245,7 +252,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      * Handles the Remove Updates button, and requests removal of location updates.
      */
     fun removeLocationUpdates(view: View) {
-        Log.i(TAG, "Removing location updates");
+        Log.i(TAG, "removeLocationUpdates: Removing location updates");
         Utils().setRequestingLocationUpdates(this, false);
         mFusedLocationClient?.removeLocationUpdates(getPendingIntent());
     }
@@ -256,6 +263,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
      * user is requesting location updates.
      */
     private fun updateButtonsState(requestingLocationUpdates: Boolean) {
+        Log.i(TAG, "updateButtonsState")
         if (requestingLocationUpdates) {
             mRequestUpdatesButton?.setEnabled(false)
             mRemoveUpdatesButton?.setEnabled(true)
@@ -266,7 +274,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
     }
 
     companion object {
-        const val TAG = "bgLocation MainActivity"
+        const val TAG = "bgLoc MainActivity"
         const val REQUEST_PERMISSIONS_REQUEST_CODE = 1
 
         const val UPDATE_INTERVAL = 10800000L // 1000ms*60s*180m

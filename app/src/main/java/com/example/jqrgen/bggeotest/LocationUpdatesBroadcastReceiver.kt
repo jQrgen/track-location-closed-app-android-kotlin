@@ -24,6 +24,8 @@ import com.google.android.gms.location.LocationResult
 class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
+        Log.i(MainActivity.TAG, "onReceive")
+
         if (intent != null) {
             val action = intent.action
             if (ACTION_PROCESS_UPDATES == action) {
@@ -39,7 +41,7 @@ class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = "bgLocation LocationUpdatesBroadcastReceiver"
+        private val TAG = "bgLoc LUBReceiver"
 
         internal val ACTION_PROCESS_UPDATES = "com.google.android.gms.location.sample.locationupdatespendingintent.action" + ".PROCESS_UPDATES"
     }

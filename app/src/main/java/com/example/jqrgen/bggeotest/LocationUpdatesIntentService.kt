@@ -23,6 +23,8 @@ import com.google.android.gms.location.LocationResult
 class LocationUpdatesIntentService : IntentService(TAG) {
 
     override fun onHandleIntent(intent: Intent?) {
+        Log.i(MainActivity.TAG, "onHandleIntent")
+
         if (intent != null) {
             val action = intent.action
             if (ACTION_PROCESS_UPDATES.equals(action)) {
@@ -39,6 +41,6 @@ class LocationUpdatesIntentService : IntentService(TAG) {
 
     companion object {
         private const val ACTION_PROCESS_UPDATES = "com.google.android.gms.location.sample.locationupdatespendingintent.action" + ".PROCESS_UPDATES"
-        const val TAG = "bgLocation LocationUpdatesIntentService"
+        const val TAG = "bgLoc LUIntentService"
     }
 }
