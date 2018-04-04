@@ -137,6 +137,7 @@ class Utils{
     }
 
     companion object {
+        const val TAG = "bgLocation Utils"
         const val KEY_LOCATION_UPDATES_REQUESTED = "location-updates-requested"
         const val KEY_LOCATION_UPDATES_RESULT = "location-update-result"
         const val CHANNEL_ID = "channel_01"

@@ -39,7 +39,7 @@ class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        private val TAG = "LUBroadcastReceiver"
+        private val TAG = "bgLocation LocationUpdatesBroadcastReceiver"
 
         internal val ACTION_PROCESS_UPDATES = "com.google.android.gms.location.sample.locationupdatespendingintent.action" + ".PROCESS_UPDATES"
     }

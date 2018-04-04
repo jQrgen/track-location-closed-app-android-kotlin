@@ -39,6 +39,6 @@ class LocationUpdatesIntentService : IntentService(TAG) {
 
     companion object {
         private const val ACTION_PROCESS_UPDATES = "com.google.android.gms.location.sample.locationupdatespendingintent.action" + ".PROCESS_UPDATES"
-        private val TAG = LocationUpdatesIntentService::class.java.simpleName
+        const val TAG = "bgLocation LocationUpdatesIntentService"
     }
 }
