@@ -12,7 +12,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/using_batched_locaaction_view"
+        android:id="@+id/using_batched_locaction_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/batched_location_updates"
@@ -37,5 +37,6 @@
     <TextView
         android:id="@+id/location_updates_result"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="asdasd" />
 </LinearLayout>

@@ -46,7 +46,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         mRequestUpdatesButton = findViewById(R.id.request_updates_button);
         mRemoveUpdatesButton = findViewById(R.id.remove_updates_button)
         mLocationUpdatesResultView = findViewById(R.id.location_updates_result)
-
+        mLocationUpdatesResultView?.text = "LOL"
         // Check if the user revoked runtime permissions.
         if (!checkFineLocationPermission()) {
             requestFineLocationPermission()
@@ -67,7 +67,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         super.onResume()
         updateButtonsState(Utils().getRequestingLocationUpdates(this))
         Log.i(TAG, "Utils().getLocationUpdatesResult(this): ${Utils().getLocationUpdatesResult(this)}" )
-        mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
+        mLocationUpdatesResultView?.text = Utils().getLocationUpdatesResult(this)
     }
 
     override fun onStop() {
@@ -226,7 +226,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
         Log.i(TAG, "Utils().getLocationUpdatesResult(this): ${Utils().getLocationUpdatesResult(this)}")
 
         if (s == Utils.KEY_LOCATION_UPDATES_RESULT) {
-            mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))
+            mLocationUpdatesResultView?.text = Utils().getLocationUpdatesResult(this)
         } else if (s == Utils.KEY_LOCATION_UPDATES_REQUESTED) {
             updateButtonsState(Utils().getRequestingLocationUpdates(this))
         }

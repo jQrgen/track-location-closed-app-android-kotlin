@@ -39,7 +39,7 @@ class Utils{
         Log.i(TAG, "getLocationUpdatesResult")
 
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(KEY_LOCATION_UPDATES_RESULT, "")
+                .getString(KEY_LOCATION_UPDATES_RESULT, "No result getLocationUpdatesResult")
     }
 
 
