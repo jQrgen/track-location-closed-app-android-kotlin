@@ -20,7 +20,7 @@ import java.util.*
 class Utils{
 
     fun setRequestingLocationUpdates(context: Context, value: Boolean) {
-        Log.i(MainActivity.TAG, "setRequestingLocationUpdates")
+        Log.i(TAG, "setRequestingLocationUpdates")
 
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
@@ -29,14 +29,14 @@ class Utils{
     }
 
     fun getRequestingLocationUpdates(context: Context): Boolean {
-        Log.i(MainActivity.TAG, "getRequestingLocationUpdates")
+        Log.i(TAG, "getRequestingLocationUpdates")
 
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(KEY_LOCATION_UPDATES_REQUESTED, false)
     }
 
     fun getLocationUpdatesResult(context: Context): String {
-        Log.i(MainActivity.TAG, "getLocationUpdatesResult")
+        Log.i(TAG, "getLocationUpdatesResult")
 
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_LOCATION_UPDATES_RESULT, "")
@@ -48,7 +48,7 @@ class Utils{
      * If the user clicks the notification, control goes to the MainActivity.
      */
     fun sendNotification(context: Context, notificationDetails: String) {
-        Log.i(MainActivity.TAG, "sendNotification")
+        Log.i(TAG, "sendNotification")
 
         // Create an explicit content Intent that starts the main Activity.
         val notificationIntent = Intent(context, MainActivity::class.java)
@@ -110,7 +110,7 @@ class Utils{
      * @param context The [Context].
      */
     fun getLocationResultTitle(context: Context, locations: List<Location>): String {
-        Log.i(MainActivity.TAG, "getLocationResultTitle")
+        Log.i(TAG, "getLocationResultTitle")
 
         val numLocationsReported = context.resources.getQuantityString(
                 R.plurals.num_locations_reported, locations.size, locations.size)
@@ -123,7 +123,7 @@ class Utils{
      * @param locations List of [Location]s.
      */
     private fun getLocationResultText(context: Context, locations: List<Location>): String {
-        Log.i(MainActivity.TAG, "getLocationResultText")
+        Log.i(TAG, "getLocationResultText")
 
         if (locations.isEmpty()) {
             return context.getString(R.string.unknown_location)
@@ -142,7 +142,7 @@ class Utils{
 
 
     fun setLocationUpdatesResult(context: Context, locations: List<Location>) {
-        Log.i(MainActivity.TAG, "setLocationUpdatesResult")
+        Log.i(TAG, "setLocationUpdatesResult")
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
                 .putString(KEY_LOCATION_UPDATES_RESULT, getLocationResultTitle(context, locations)

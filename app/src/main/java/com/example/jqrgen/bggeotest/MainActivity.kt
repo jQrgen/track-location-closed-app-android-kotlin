@@ -224,6 +224,7 @@ class MainActivity : FragmentActivity(), SharedPreferences.OnSharedPreferenceCha
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, s: String) {
         Log.i(TAG, "onSharedPreferenceChanged")
+        Log.i(TAG, "Utils().getLocationUpdatesResult(this): ${Utils().getLocationUpdatesResult(this)}")
 
         if (s == Utils.KEY_LOCATION_UPDATES_RESULT) {
             mLocationUpdatesResultView?.setText(Utils().getLocationUpdatesResult(this))

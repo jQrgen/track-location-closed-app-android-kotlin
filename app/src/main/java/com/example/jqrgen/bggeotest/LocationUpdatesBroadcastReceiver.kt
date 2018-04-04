@@ -24,7 +24,7 @@ import com.google.android.gms.location.LocationResult
 class LocationUpdatesBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent?) {
-        Log.i(MainActivity.TAG, "onReceive")
+        Log.i(TAG, "onReceive")
 
         if (intent != null) {
             val action = intent.action

@@ -23,7 +23,7 @@ import com.google.android.gms.location.LocationResult
 class LocationUpdatesIntentService : IntentService(TAG) {
 
     override fun onHandleIntent(intent: Intent?) {
-        Log.i(MainActivity.TAG, "onHandleIntent")
+        Log.i(TAG, "onHandleIntent")
 
         if (intent != null) {
             val action = intent.action
